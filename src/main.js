@@ -8,8 +8,6 @@ import 'iview/dist/styles/iview.css'
 
 Vue.use(iView)
 
-Vue.prototype.bus = new Vue()
-
 router.afterEach(route => document.title = route.name)
 
 const vm = new Vue({
