@@ -39,4 +39,12 @@
   input, input:focus {
     -webkit-appearance: none;
   }
+  html {
+    height: 100%;
+  }
+  body {
+    height: 100%;
+    background: url("../static/bg.png");
+    background-size:100% 100%;
+  }
 </style>

@@ -72,7 +72,7 @@
             })
             return
           }
-
+          // // 暂时取消姓名正则，以防莫名其妙的bug
           // if (!/^[\u4E00-\u9FA5]{2,}$/.test(this.name)) {
           //   this.$Message.error({
           //     content: "姓名写错啦>_<"
@@ -84,14 +84,51 @@
             content: "正在查找我的记录……"
           })
        
-          let res = api.get("", {
-              cardnum: this.cardnum,
-              name: this.num
-            })
+          // let res = api.get("", {
+          //     cardnum: this.cardnum,
+          //     name: this.num
+          //   })
+
+          // 测试数据
+          let res = {
+            result: true,
+            data: {
+              firstBook: {
+                bookName: "第一本书",
+                time: "2015-09-18"
+              },
+              totalBorrow: {
+                borrowCount: 17,
+                rank: 3456,
+                studentCount: 4321
+              },
+              enter: {
+                enterCount: 118,
+                rank: 2789,
+                studentCount: 4321
+              },
+              longestBorrow: {
+                bookName: "最长的书",
+                borrowTime: "2016-03-01",
+                returnTime: "2016-05-29",
+                span: 90
+              },
+              longestEnter: {
+                beginTime: "2017-01-09",
+                endTime: "2017-01-21",
+                span: 13
+              }
+            }
+          }
           this.$Message.destroy()
 
           if (res.result) {
-            // 组件间通信，传递data
+            this.$router.replace({
+              name: "首页",
+              params: {
+                data: res.data
+              }
+            })
           } else {
             this.$Message.error({
               content: "啊哦……没有找到数据呢>_< <br/> 请确认信息填写无误哦～",
@@ -106,15 +143,7 @@
   }
 </script>
 
-<style>
-  html {
-    height: 100%;
-  }
-  body {
-    height: 100%;
-    background: url("../../static/bg.png");
-    background-size:100% 100%;
-  }
+<style scoped>
   .container {
     display: flex;
     flex-direction: column;
