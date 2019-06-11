@@ -47,4 +47,7 @@
     background: url("../static/bg.png");
     background-size:100% 100%;
   }
+  #app {
+    height: 100%;
+  }
 </style>
