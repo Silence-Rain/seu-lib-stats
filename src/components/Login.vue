@@ -2,15 +2,15 @@
   <div id="login" class="container">
     <transition 
       appear
-      appear-class="logo-appear"
-      appear-active-class="logo-appear-active"
+      appear-class="item-appear"
+      appear-active-class="item-appear-active"
     >
       <img src="../../static/logo.png" class="logo" />
     </transition>
 
     <transition
       appear
-      appear-class="title-appear"
+      appear-class="item-appear"
       appear-active-class="title-appear-active"
     >
       <div class="title-level">
@@ -19,14 +19,25 @@
       </div>
     </transition>
 
-    <div class="input-level">
-      <Input v-model="cardnum" placeholder="我的一卡通号" />
-      <Input v-model="name" placeholder="我的姓名" />
-    </div>
+    <transition
+      appear
+      appear-class="item-appear"
+      appear-active-class="input-appear-active"
+    >
+      <div class="input-level">
+        <Input v-model="cardnum" placeholder="我的一卡通号" />
+        <Input v-model="name" placeholder="我的姓名" />
+      </div>
+    </transition>
 
-    <a class="btn" :class="{ 'btn-active': isClick }" @click="login">
-      开启我的记录 ...
-    </a>  
+    <transition
+      enter-class="item-appear"
+      enter-active-class="item-appear-active"
+    >
+      <a class="btn" :class="{ 'btn-active': isClick }" @click="login" v-if="isInputFinished">
+        开启我的记录 ...
+      </a> 
+    </transition>
   </div>
 </template>
 
@@ -41,48 +52,55 @@
         isClick: false,
       }
     },
+    computed: {
+      isInputFinished () {
+        return this.cardnum && this.name
+      }
+    },
     async created () {
       
-    },
-    async mounted () {
-
     },
     methods: {
       login () {
         this.isClick = true
-        if (this.cardnum) {
-          if (this.name) {
-            this.$Message.loading({
-              content: "正在查找我的记录……"
-            })
-            let res = api.get("", {
-                cardnum: this.cardnum,
-                name: this.num
-              })
-            this.$Message.destroy()
 
-            if (res.result) {
-              // 组件间通信，传递data
-            } else {
-              this.$Message.error({
-                content: "啊哦……好像一卡通号或者姓名不正确呢>_<",
-                duration: 3
-              })
-            }
-            this.isClick = false
-            
+        if (this.isInputFinished) {
+
+          if (!/^[12]\d{8}$/.test(this.cardnum)) {
+            this.$Message.error({
+              content: "一卡通号写错啦>_<"
+            })
+            return
+          }
+
+          // if (!/^[\u4E00-\u9FA5]{2,}$/.test(this.name)) {
+          //   this.$Message.error({
+          //     content: "姓名写错啦>_<"
+          //   })
+          //   return
+          // }
+
+          this.$Message.loading({
+            content: "正在查找我的记录……"
+          })
+       
+          let res = api.get("", {
+              cardnum: this.cardnum,
+              name: this.num
+            })
+          this.$Message.destroy()
+
+          if (res.result) {
+            // 组件间通信，传递data
           } else {
             this.$Message.error({
-              content: "忘了填写姓名啦>_<",
-              duration: 1.5
+              content: "啊哦……没有找到数据呢>_< <br/> 请确认信息填写无误哦～",
+              duration: 3
             })
           }
-        } else {
-          this.$Message.error({
-            content: "忘了填写一卡通号啦>_<",
-            duration: 1.5
-          })
-        }   
+
+          this.isClick = false
+        }
       }
     }
   }
@@ -101,19 +119,16 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-  } 
-  .logo-appear {
+  }
+  .item-appear {
     opacity: 0;
   }
-  .logo-appear-active {
+  .item-appear-active {
     transition: opacity 2s ease-in-out;
   }
   .logo {
     width: 80%;
     margin-top: 15%;
-  }
-  .title-appear {
-    opacity: 0;
   }
   .title-appear-active {
     transition: opacity 2s ease-in-out 1.5s;
@@ -152,6 +167,9 @@
   }
   .title-static {
     width: 240px;
+  }
+  .input-appear-active {
+    transition: opacity 2s ease-in-out 3s;
   }
   .input-level {
     display: flex;
