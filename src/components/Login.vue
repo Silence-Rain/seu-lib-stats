@@ -2,27 +2,24 @@
   <div id="login" class="container">
     <transition 
       appear
-      appear-class="item-appear"
-      appear-active-class="item-appear-active"
+      appear-active-class="animated bounceInDown"
     >
       <img src="../../static/logo.png" class="logo" />
     </transition>
 
     <transition
       appear
-      appear-class="item-appear"
-      appear-active-class="title-appear-active"
+      appear-active-class="animated lightSpeedIn delay-1s"
     >
       <div class="title-level">
-        <img src="../../static/title-animate.png" class="title-animate"/>
+        <img src="../../static/title-animate.png" class="title-animate animated tada delay-2s"/>
         <img src="../../static/title-static.png" class="title-static" />
       </div>
     </transition>
 
     <transition
       appear
-      appear-class="item-appear"
-      appear-active-class="input-appear-active"
+      appear-active-class="animated fadeIn delay-2s"
     >
       <div class="input-level">
         <Input v-model="cardnum" placeholder="我的一卡通号" />
@@ -31,8 +28,7 @@
     </transition>
 
     <transition
-      enter-class="item-appear"
-      enter-active-class="item-appear-active"
+      enter-active-class="animated fadeInUp"
     >
       <a class="btn" :class="{ 'btn-active': isClick }" @click="login" v-if="isInputFinished">
         开启我的记录 ...
@@ -149,18 +145,9 @@
     flex-direction: column;
     align-items: center;
   }
-  .item-appear {
-    opacity: 0;
-  }
-  .item-appear-active {
-    transition: opacity 2s ease-in-out;
-  }
   .logo {
     width: 80%;
     margin-top: 15%;
-  }
-  .title-appear-active {
-    transition: opacity 2s ease-in-out 1.5s;
   }
   .title-level {
     display: flex;
@@ -174,31 +161,10 @@
     overflow: hidden;
   }
   .title-animate {
-    width: 70px;
-    animation: bounce-in 1s ease-in-out 4s;
-  }
-  @keyframes bounce-in {
-    0% {
-      transform: scale(1);
-    }
-    25% {
-      transform: scale(1.5);
-    }
-    50% {
-      transform: scale(1.1);
-    }
-    75% {
-      transform: scale(1.4);
-    }
-    100% {
-      transform: scale(1);
-    }
+    width: 80px;
   }
   .title-static {
     width: 240px;
-  }
-  .input-appear-active {
-    transition: opacity 2s ease-in-out 3s;
   }
   .input-level {
     display: flex;
