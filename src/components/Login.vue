@@ -2,17 +2,17 @@
   <div id="login" class="container">
     <transition 
       appear
-      appear-active-class="animated bounceInDown"
+      appear-active-class="animated bounceInDown slow"
     >
       <img src="../../static/logo.png" class="logo" />
     </transition>
 
     <transition
       appear
-      appear-active-class="animated lightSpeedIn delay-1s"
+      appear-active-class="animated lightSpeedIn delay-2s"
     >
       <div class="title-level">
-        <img src="../../static/title-animate.png" class="title-animate animated tada delay-2s"/>
+        <img src="../../static/title-animate.png" class="title-animate animated tada delay-3s"/>
         <img src="../../static/title-static.png" class="title-static" />
       </div>
     </transition>
@@ -62,12 +62,12 @@
 
         if (this.isInputFinished) {
 
-          if (!/^[12]\d{8}$/.test(this.cardnum)) {
-            this.$Message.error({
-              content: "一卡通号写错啦>_<"
-            })
-            return
-          }
+          // if (!/^[12]\d{8}$/.test(this.cardnum)) {
+          //   this.$Message.error({
+          //     content: "一卡通号写错啦>_<"
+          //   })
+          //   return
+          // }
           // // 暂时取消姓名正则，以防莫名其妙的bug
           // if (!/^[\u4E00-\u9FA5]{2,}$/.test(this.name)) {
           //   this.$Message.error({
@@ -157,8 +157,6 @@
     margin-top: 5%;
     justify-content: center;
     align-items: center;
-    background-color: rgba(255, 255, 255, 0);
-    overflow: hidden;
   }
   .title-animate {
     width: 80px;
@@ -172,7 +170,6 @@
     align-items: center;
     width: 50%;
     margin-top: 15%;
-    background-color: rgba(255, 255, 255, 0);
   }
   .ivu-input-wrapper {
     padding: 0;

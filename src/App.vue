@@ -47,6 +47,9 @@
     background: url("../static/bg.png");
     background-size:100% 100%;
   }
+  div {
+    background-color: rgba(255, 255, 255, 0);
+  }
   #app {
     height: 100%;
   }
