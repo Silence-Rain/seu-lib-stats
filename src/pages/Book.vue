@@ -1,8 +1,50 @@
 <template>
   <div id="book">
-    总共借的书，排名<br/>
-    我借的最久的书<br/>
-    我借的第一本书
+    <transition 
+      appear
+      appear-active-class="animated bounceInDown"
+    >
+      <div id="stats" style="width: 90%; height: 40%">
+        <div class="card">
+          <div>
+            <div class="title-label">
+              <p>大学期间总计借阅</p>
+            </div>
+            <div class="title-info">
+              <p><span class="title-strong">{{ borrowCount_countup }}</span> 本书</p>
+              <!-- <p><span class="title-strong">{{ totalBorrow.borrowCount }}</span> 本书</p> -->
+            </div>
+          </div>
+
+          <div class="stats-level flex-row-container">
+            <div class="flex-column-container" style="width: 60%;">
+              <p>超过全校 <span class="text-strong">{{ borrowPercentage_countup }}%</span> 的人</p>
+              <Progress :percent="borrowPercentage_countup" stroke-color="#104E8B" hide-info />
+            </div>
+            <div class="flex-column-container" style="width: 40%; border-left: 1px solid #ddd;">
+              <p style="margin-top: 0.6em;">在院系中排名</p>
+              <p>第 <span class="text-strong">{{ rankDept_countup }}</span> 名</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </transition>
+
+    <div id="slide1" class="slides-level">
+      <p class="animated fadeInLeftBig delay-1s slow"><span class="text-strong">{{ parseTime(firstBook.time) }} </span></p>
+      <p class="animated fadeInLeftBig delay-1s slow">这天，你走进图书馆，借走了你的第一本书</p>
+      <p class="animated fadeInLeftBig delay-2s slow"><span class="text-strong">《 {{ firstBook.bookName }} 》</span></p>
+    </div>
+
+    <div id="slide2" class="slides-level right-align">
+      <p class="animated fadeInRightBig delay-3s slow">从 <span class="text-slight-strong">{{ parseTime(longestBorrow.borrowTime) }}</span> 到 <span class="text-slight-strong">{{ parseTime(longestBorrow.returnTime) }}</span></p>
+      <p class="animated fadeInRightBig delay-3s slow"><span class="text-strong">{{ longestBorrow.span }}</span> 天这么长的时间里，你始终和</p>
+      <p class="animated fadeInRightBig delay-4s slow"><span class="text-strong">《 {{ longestBorrow.bookName }} 》</span></p>
+      <p class="animated fadeInRightBig delay-5s slow">相伴</p>
+      <p class="animated fadeInRightBig delay-5s slow">你一定是从中读出了熟悉的自己～</p>
+    </div>
+
+
   </div>
 </template>
 
@@ -10,15 +52,133 @@
   export default {
     data () {
       return {
+        totalBorrow: {
+          borrowCount: 17,
+          rankAll: 3433,
+          rankDept: 201,
+          studentCount: 4321
+        },
+        firstBook: {
+          bookName: "第一本书",
+          time: "2015-09-18"
+        },
+        longestBorrow: {
+          bookName: "最长的书",
+          borrowTime: "2016-03-01",
+          returnTime: "2016-05-29",
+          span: 90
+        },
+        borrowCount_countup: 0,
+        rankDept_countup: 0,
+        borrowPercentage_countup: 0.0,
       }
     },
-    async created () {
+    computed: {
+      borrowPercentage () {
+        return 100 * this.totalBorrow.rankAll / this.totalBorrow.studentCount
+        // return Number((100 * this.totalBorrow.rankAll / this.totalBorrow.studentCount).toFixed(1))
+      }
+    },
+    // props: {
+    //   totalBorrow: Object,
+    //   firstBook: Object,
+    //   longestBorrow: Object,
+    // },
+    async mounted () {
+      setInterval(() => {
+        if (this.borrowCount_countup < this.totalBorrow.borrowCount)
+          this.borrowCount_countup += 1
+      }, 100)
+      setInterval(() => {
+        if (this.rankDept_countup < this.totalBorrow.rankDept)
+          this.rankDept_countup += 1
+      }, 10)
+      setInterval(() => {
+        if (this.borrowPercentage_countup < this.borrowPercentage)
+          this.borrowPercentage_countup = Number((this.borrowPercentage_countup + 0.2).toFixed(1))
+      }, 1)
     },
     methods: {
+      parseTime (t) {
+        let d = new Date(t)
+        return `${d.getFullYear()}年${d.getMonth() + 1}月${d.getDate()}日`
+      }
     }
   }
 </script>
 
 <style scoped>
-
+  #stats {
+    position: absolute;
+    top: 5%;
+    left: 5%;
+  }
+  #slide1 {
+    position: absolute;
+    top: 48%;
+  }
+  #slide2 {
+    position: absolute;
+    top: 68%;
+    right: 0;
+  }
+  .card {
+    padding: 7% 3%;
+    background-color: rgba(255, 255, 255, 0.6);
+    box-shadow: 3px 3px 3px #eee;
+    border-radius: 10px;
+  }
+  .flex-row-container {
+    display: flex;
+    flex-direction: row;
+  }
+  .flex-column-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .title-label {
+    font-size: 2.2em;
+    font-weight: bolder;
+    color: #444;
+  }
+  .title-info {
+    font-size: 1.8em;
+    margin-top: -10px;
+    margin-bottom: 10px;
+  }
+  .title-strong {
+    font-size: 2.2em;
+    font-weight: bolder;
+    color: #104E8B;
+  }
+  .stats-level {
+    border-top: 1px dashed #ddd;
+    border-bottom: 1px solid #ddd;
+  }
+  .stats-level div {  
+    padding: 5% 2%;
+  }
+  .text-strong {
+    font-size: 1.6em;
+    font-weight: bold;
+    color: #104E8B;
+  }
+  .text-slight-strong {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #104E8B;
+  }
+  .slides-level {
+    padding: 2% 5%;
+  }
+  .slides-level p {
+    margin: 5px;
+    padding: 2px 5px;
+    border-bottom: 1px solid #ddd;
+    line-height: 1.8em;
+  }
+  .right-align p {
+    text-align: right;
+  }
 </style>

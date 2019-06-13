@@ -6,13 +6,13 @@
     <div class="fullpage-container flex-column-container">
       <div class="fullpage-wp" v-fullpage="opts" ref="pages">
         <div class="page">
-          <Book />
+          <Book v-bind="bookData" />
         </div>
         <div class="page">
-          <Enter />
+          <Enter v-bind="enterData" />
         </div>
         <div class="page">
-          <Portrait />
+          <Portrait v-bind="portraitData" />
         </div>
       </div>
       
@@ -33,6 +33,9 @@
     data () {
       return {
         data: null,
+        bookData: null,
+        enterData: null,
+        portraitData: null,
         opts: {
           start: 0,
           dir: 'v',
@@ -47,7 +50,19 @@
     },
     async created () {
       this.data = this.$route.params.data
-      console.log("data: ", this.data)
+      let { totalBorrow, firstBook, longestBorrow, enter, longestEnter, portrait } = this.data
+      this.bookData = {
+        totalBorrow: totalBorrow,
+        firstBook: firstBook,
+        longestBorrow: longestBorrow
+      }
+      this.enterData = {
+        enter: enter,
+        longestEnter: longestEnter
+      }
+      this.portraitData = {
+        portrait: portrait
+      }
     },
     methods: {
       moveNext(){

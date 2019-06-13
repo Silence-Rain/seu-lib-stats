@@ -22,16 +22,16 @@
       appear-active-class="animated fadeIn delay-2s"
     >
       <div class="input-level">
-        <Input v-model="cardnum" placeholder="我的一卡通号" />
-        <Input v-model="name" placeholder="我的姓名" />
+        <Input v-model="cardnum" placeholder="你的一卡通号" />
+        <Input v-model="name" placeholder="你的姓名" />
       </div>
     </transition>
 
     <transition
       enter-active-class="animated fadeInUp"
     >
-      <a class="btn" :class="{ 'btn-active': isClick }" @click="login" v-if="isInputFinished">
-        开启我的记录 ...
+      <a class="btn" @click="login" v-if="isInputFinished">
+        开启回忆 ...
       </a> 
     </transition>
   </div>
@@ -45,7 +45,6 @@
       return {
         cardnum: "",
         name: "",
-        isClick: false,
       }
     },
     computed: {
@@ -58,8 +57,6 @@
     },
     methods: {
       login () {
-        this.isClick = true
-
         if (this.isInputFinished) {
 
           // if (!/^[12]\d{8}$/.test(this.cardnum)) {
@@ -77,7 +74,7 @@
           // }
 
           this.$Message.loading({
-            content: "正在查找我的记录……"
+            content: "正在提取回忆……"
           })
        
           // let res = api.get("", {
@@ -95,7 +92,8 @@
               },
               totalBorrow: {
                 borrowCount: 17,
-                rank: 3456,
+                rankAll: 3456,
+                rankDept: 201,
                 studentCount: 4321
               },
               enter: {
@@ -113,7 +111,8 @@
                 beginTime: "2017-01-09",
                 endTime: "2017-01-21",
                 span: 13
-              }
+              },
+              portrait: "画像名称"
             }
           }
           this.$Message.destroy()
@@ -127,12 +126,10 @@
             })
           } else {
             this.$Message.error({
-              content: "啊哦……没有找到数据呢>_< <br/> 请确认信息填写无误哦～",
+              content: "啊哦……没有找到回忆呢>_< <br/> 请确认信息填写无误哦～",
               duration: 3
             })
           }
-
-          this.isClick = false
         }
       }
     }
@@ -190,9 +187,5 @@
     text-align: center;
     position: fixed;
     bottom: 60px;
-  }
-  .btn-active {
-    color: #444;
-    background: linear-gradient(to right, rgba(195, 221, 176, .5), rgba(88, 131, 9, .5));
   }
 </style>

@@ -53,4 +53,8 @@
   #app {
     height: 100%;
   }
+  .ivu-progress-inner {
+    padding: 1px;
+    border: 1px solid #777;
+  }
 </style>
