@@ -25,8 +25,8 @@
     -webkit-tap-highlight-color: transparent;
   }
   @font-face {
-    font-family: XingZheNote;
-    src: url(../static/fonts/XingZheNote.woff2);
+    font-family: "XingZheNote";
+    src: url("../static/fonts/XingZheNote.woff");
   }
   * {
     font-family: 'XingZheNote', sans-serif;
