@@ -1,7 +1,7 @@
 <template>
   <transition 
     appear
-    appear-active-class="animated fadeIn slow"
+    appear-active-class="animated flipInX slow"
   >
     <div class="fullpage-container flex-column-container">
       <div class="fullpage-wp" v-fullpage="opts" ref="pages">
@@ -82,6 +82,6 @@
     width: 10%;
     position: fixed;
     left: 45%;
-    bottom: 5%;
+    bottom: 2%;
   }
 </style>

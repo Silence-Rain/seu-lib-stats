@@ -1,19 +1,23 @@
 <template>
-  <div id="login" class="container">
+  <div>
+  
+  <div id="login" class="flex-column-container">
     <transition 
       appear
       appear-active-class="animated bounceInDown slow"
     >
-      <img src="../../static/logo.png" class="logo" />
+      <img src="../../static/logo.png" class="logo" @load="loadImg" />
     </transition>
 
     <transition
       appear
       appear-active-class="animated lightSpeedIn delay-2s"
     >
-      <div class="title-level">
-        <img src="../../static/title-animate.png" class="title-animate animated tada delay-3s"/>
-        <img src="../../static/title-static.png" class="title-static" />
+      <div class="flex-column-container title-level">
+        <p class="title-static">de</p>
+        <p class="title-animate animated tada delay-3s">毕业回忆</p>
+        <!-- <img src="../../static/title-animate.png" class="title-animate animated tada delay-3s"/>
+        <img src="../../static/title-static.png" class="title-static" /> -->
       </div>
     </transition>
 
@@ -35,6 +39,7 @@
       </a> 
     </transition>
   </div>
+</div>
 </template>
 
 <script>
@@ -45,6 +50,7 @@
       return {
         cardnum: "",
         name: "",
+        isLoaded: false,
       }
     },
     computed: {
@@ -52,10 +58,16 @@
         return this.cardnum && this.name
       }
     },
-    async created () {
-      
+    async mounted () {
+      this.$Message.loading("正在加载……")
     },
     methods: {
+      emptyFunc () {
+
+      },
+      loadImg () {
+        this.$Message.destroy()
+      },
       login () {
         if (this.isInputFinished) {
 
@@ -73,9 +85,7 @@
           //   return
           // }
 
-          this.$Message.loading({
-            content: "正在提取回忆……"
-          })
+          this.$Message.loading("正在提取回忆……")
        
           // let res = api.get("", {
           //     cardnum: this.cardnum,
@@ -137,7 +147,7 @@
 </script>
 
 <style scoped>
-  .container {
+  .flex-column-container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -147,26 +157,22 @@
     margin-top: 15%;
   }
   .title-level {
-    display: flex;
-    flex-direction: row;
     width: 100%;
-    height: 80px;
-    margin-top: 5%;
-    justify-content: center;
-    align-items: center;
   }
   .title-animate {
-    width: 80px;
+    font-size: 4.5em;
+    color: #104E8B;
+    font-weight: bolder;
   }
   .title-static {
-    width: 240px;
+    font-size: 3em;
   }
   .input-level {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 50%;
-    margin-top: 15%;
+    margin-top: 10%;
   }
   .ivu-input-wrapper {
     padding: 0;

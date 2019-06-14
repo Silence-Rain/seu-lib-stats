@@ -24,8 +24,12 @@
   :root {
     -webkit-tap-highlight-color: transparent;
   }
+  @font-face {
+    font-family: XingZheNote;
+    src: url(../static/fonts/XingZheNote.woff2);
+  }
   * {
-    font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Source Han Sans CN', 'Noto Sans CJK SC', 'Microsoft YaHei UI', 'Microsoft YaHei', sans-serif;
+    font-family: 'XingZheNote', sans-serif;
   }
   a, a:link, a:hover, a:active, a:focus, a:visited {
     color: inherit;
