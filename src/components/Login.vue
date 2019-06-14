@@ -16,8 +16,6 @@
       <div class="flex-column-container title-level">
         <p class="title-static">de</p>
         <p class="title-animate animated tada delay-3s">毕业回忆</p>
-        <!-- <img src="../../static/title-animate.png" class="title-animate animated tada delay-3s"/>
-        <img src="../../static/title-static.png" class="title-static" /> -->
       </div>
     </transition>
 

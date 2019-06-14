@@ -1,30 +1,28 @@
 <template>
-  <div id="book">
-      <div id="stats" :class="{animated: isLoaded, bounceInDown: isLoaded}" style="width: 90%; height: 40%">
-        <div class="card">
-          <div>
-            <div class="title-label">
-              <p>大学期间总计进馆</p>
-            </div>
-            <div class="title-info">
-              <p><span class="title-strong">{{ enterCount_countup }}</span> 次</p>
-              <!-- <p><span class="title-strong">{{ totalBorrow.borrowCount }}</span> 本书</p> -->
-            </div>
+  <div id="enter">
+    <div id="stats" class="animated bounceInDown" style="width: 90%; height: 40%">
+      <div class="card">
+        <div>
+          <div class="title-label">
+            <p>大学期间总计进馆</p>
           </div>
+          <div class="title-info">
+            <p><span class="title-strong">{{ enterCount_countup }}</span> 次</p>
+          </div>
+        </div>
 
-          <div class="stats-level flex-row-container">
-            <div class="flex-column-container" style="width: 60%;">
-              <p>超过全校 <span class="text-strong">{{ enterPercentage_countup }}%</span> 的人</p>
-              <Progress :percent="enterPercentage_countup" stroke-color="#104E8B" hide-info />
-            </div>
-            <div class="flex-column-container" style="width: 40%; border-left: 1px solid #ddd;">
-              <p style="margin-top: 0.6em;">在院系中排名</p>
-              <p>第 <span class="text-strong">{{ rankDept_countup }}</span> 名</p>
-            </div>
+        <div class="stats-level flex-row-container">
+          <div class="flex-column-container" style="width: 60%;">
+            <p>超过全校 <span class="text-strong">{{ enterPercentage_countup }}%</span> 的人</p>
+            <Progress :percent="enterPercentage_countup" stroke-color="#104E8B" hide-info />
+          </div>
+          <div class="flex-column-container" style="width: 40%; border-left: 1px solid #ddd;">
+            <p style="margin-top: 0.6em;">在院系中排名</p>
+            <p>第 <span class="text-strong">{{ rankDept_countup }}</span> 名</p>
           </div>
         </div>
       </div>
-
+    </div>
 
     <div id="slide1" class="slides-level">
       <p class="animated fadeInLeftBig delay-1s slow"><span class="text-strong">{{ parseTime(firstEnter.time) }} </span></p>
@@ -52,22 +50,17 @@
         enterCount_countup: 0,
         rankDept_countup: 0,
         enterPercentage_countup: 0.0,
-        isLoaded: false,
       }
     },
     computed: {
       enterPercentage () {
         return 100 * this.enter.rankAll / this.enter.studentCount
-        // return Number((100 * this.totalBorrow.rankAll / this.totalBorrow.studentCount).toFixed(1))
       }
     },
-    // props: {
-    //   totalBorrow: Object,
-    //   firstBook: Object,
-    //   longestBorrow: Object,
-    // },
-    async updated () {
-      this.isLoaded = true
+    props: {
+      // totalBorrow: Object,
+      // firstBook: Object,
+      // longestBorrow: Object,
     },
     async mounted () {
       setInterval(() => {

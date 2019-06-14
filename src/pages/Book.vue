@@ -1,34 +1,28 @@
 <template>
   <div id="book">
-    <transition 
-      appear
-      appear-active-class="animated bounceInDown"
-    >
-      <div id="stats" style="width: 90%; height: 40%">
-        <div class="card">
-          <div>
-            <div class="title-label">
-              <p>大学期间总计借阅</p>
-            </div>
-            <div class="title-info">
-              <p><span class="title-strong">{{ borrowCount_countup }}</span> 本书</p>
-              <!-- <p><span class="title-strong">{{ totalBorrow.borrowCount }}</span> 本书</p> -->
-            </div>
+    <div id="stats" class="animated bounceInDown" style="width: 90%; height: 40%">
+      <div class="card">
+        <div>
+          <div class="title-label">
+            <p>大学期间总计借阅</p>
           </div>
+          <div class="title-info">
+            <p><span class="title-strong">{{ borrowCount_countup }}</span> 本书</p>
+          </div>
+        </div>
 
-          <div class="stats-level flex-row-container">
-            <div class="flex-column-container" style="width: 60%;">
-              <p>超过全校 <span class="text-strong">{{ borrowPercentage_countup }}%</span> 的人</p>
-              <Progress :percent="borrowPercentage_countup" stroke-color="#104E8B" hide-info />
-            </div>
-            <div class="flex-column-container" style="width: 40%; border-left: 1px solid #ddd;">
-              <p style="margin-top: 0.6em;">在院系中排名</p>
-              <p>第 <span class="text-strong">{{ rankDept_countup }}</span> 名</p>
-            </div>
+        <div class="stats-level flex-row-container">
+          <div class="flex-column-container" style="width: 60%;">
+            <p>超过全校 <span class="text-strong">{{ borrowPercentage_countup }}%</span> 的人</p>
+            <Progress :percent="borrowPercentage_countup" stroke-color="#104E8B" hide-info />
+          </div>
+          <div class="flex-column-container" style="width: 40%; border-left: 1px solid #ddd;">
+            <p style="margin-top: 0.6em;">在院系中排名</p>
+            <p>第 <span class="text-strong">{{ rankDept_countup }}</span> 名</p>
           </div>
         </div>
       </div>
-    </transition>
+    </div>
 
     <div id="slide1" class="slides-level">
       <p class="animated fadeInLeftBig delay-1s slow"><span class="text-strong">{{ parseTime(firstBook.time) }} </span></p>
@@ -76,14 +70,13 @@
     computed: {
       borrowPercentage () {
         return 100 * this.totalBorrow.rankAll / this.totalBorrow.studentCount
-        // return Number((100 * this.totalBorrow.rankAll / this.totalBorrow.studentCount).toFixed(1))
       }
     },
-    // props: {
-    //   totalBorrow: Object,
-    //   firstBook: Object,
-    //   longestBorrow: Object,
-    // },
+    props: {
+      // totalBorrow: Object,
+      // firstBook: Object,
+      // longestBorrow: Object,
+    },
     async mounted () {
       setInterval(() => {
         if (this.borrowCount_countup < this.totalBorrow.borrowCount)
