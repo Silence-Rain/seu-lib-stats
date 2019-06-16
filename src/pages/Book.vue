@@ -24,13 +24,13 @@
       </div>
     </div>
 
-    <div id="slide1" class="slides-level">
+    <div id="slide1" class="slides-level" v-if="firstBook">
       <p class="animated fadeInLeftBig delay-1s slow"><span class="text-strong">{{ parseTime(firstBook.time) }} </span></p>
       <p class="animated fadeInLeftBig delay-1s slow">这天，你走进图书馆，借走了你的第一本书</p>
       <p class="animated fadeInLeftBig delay-2s slow"><span class="text-strong">《 {{ firstBook.bookName }} 》</span></p>
     </div>
 
-    <div id="slide2" class="slides-level right-align">
+    <div id="slide2" class="slides-level right-align" v-if="longestBorrow">
       <p class="animated fadeInRightBig delay-3s slow">从 <span class="text-slight-strong">{{ parseTime(longestBorrow.borrowTime) }}</span> 到 <span class="text-slight-strong">{{ parseTime(longestBorrow.returnTime) }}</span></p>
       <p class="animated fadeInRightBig delay-3s slow"><span class="text-strong">{{ longestBorrow.span }}</span> 天这么长的时间里，你始终和</p>
       <p class="animated fadeInRightBig delay-4s slow"><span class="text-strong">《 {{ longestBorrow.bookName }} 》</span></p>
@@ -49,9 +49,9 @@
         borrowCount_countup: 0,
         rankDept_countup: 0,
         borrowPercentage_countup: 0,
-        borrowCount_display: "",
-        rankDept_display: "",
-        borrowPercentage_display: "",
+        borrowCount_display: "0",
+        rankDept_display: "-",
+        borrowPercentage_display: "0",
       }
     },
     computed: {
@@ -65,44 +65,46 @@
       longestBorrow: Object,
     },
     async mounted () {
-      setInterval(() => {
-        let range = this.totalBorrow.borrowCount
-        let delta = range / 150
+      if (this.totalBorrow) {
+        setInterval(() => {
+          let range = this.totalBorrow.borrowCount
+          let delta = range / 150
 
-        if (this.borrowCount_countup < range - delta) {
-          this.borrowCount_countup += delta
-        } else {
-          this.borrowCount_countup = range
-        }
-        this.borrowCount_display = this.borrowCount_countup.toFixed(0)
+          if (this.borrowCount_countup < range - delta) {
+            this.borrowCount_countup += delta
+          } else {
+            this.borrowCount_countup = range
+          }
+          this.borrowCount_display = this.borrowCount_countup.toFixed(0)
 
-      }, 10)
+        }, 10)
 
-      setInterval(() => {
-        let range = this.totalBorrow.rankDept
-        let delta = range / 150
-        
-        if (this.rankDept_countup < range - delta) {
-          this.rankDept_countup += delta
-        } else {
-          this.rankDept_countup = range
-        }
-        this.rankDept_display = this.rankDept_countup.toFixed(0)
+        setInterval(() => {
+          let range = this.totalBorrow.rankDept
+          let delta = range / 150
+          
+          if (this.rankDept_countup < range - delta) {
+            this.rankDept_countup += delta
+          } else {
+            this.rankDept_countup = range
+          }
+          this.rankDept_display = this.rankDept_countup.toFixed(0)
 
-      }, 10)
+        }, 10)
 
-      setInterval(() => {
-        let range = this.borrowPercentage
-        let delta = range / 150
-        
-        if (this.borrowPercentage_countup < range - delta) {
-          this.borrowPercentage_countup += delta
-        } else {
-          this.borrowPercentage_countup = range
-        }
-        this.borrowPercentage_display = this.borrowPercentage_countup.toFixed(2)
+        setInterval(() => {
+          let range = this.borrowPercentage
+          let delta = range / 150
+          
+          if (this.borrowPercentage_countup < range - delta) {
+            this.borrowPercentage_countup += delta
+          } else {
+            this.borrowPercentage_countup = range
+          }
+          this.borrowPercentage_display = this.borrowPercentage_countup.toFixed(2)
 
-      }, 10)
+        }, 10)
+      }
     },
     methods: {
       parseTime (t) {

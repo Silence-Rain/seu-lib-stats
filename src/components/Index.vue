@@ -49,16 +49,16 @@
       this.data = this.$route.params.data
       let [ firstBook, firstEnter, totalBorrow, enter, longestBorrow, portrait ] = this.data
       this.bookData = {
-        totalBorrow: totalBorrow,
-        firstBook: firstBook,
-        longestBorrow: longestBorrow
+        totalBorrow: Object.keys(totalBorrow).length !== 0 ? totalBorrow : null,
+        firstBook: Object.keys(firstBook).length !== 0 ? firstBook : null,
+        longestBorrow: Object.keys(longestBorrow).length !== 0 ? longestBorrow : null
       }
       this.enterData = {
-        enter: enter,
-        firstEnter: firstEnter
+        enter: Object.keys(enter).length !== 0 ? enter : null,
+        firstEnter: Object.keys(firstEnter).length !== 0 ? firstEnter : null
       }
       this.portraitData = {
-        portrait: portrait
+        portrait: Object.keys(portrait).length !== 0 ? portrait : null
       }
     },
     methods: {

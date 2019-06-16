@@ -25,7 +25,7 @@
       </div>
     </div>
 
-    <div id="slide1" class="slides-level">
+    <div id="slide1" class="slides-level" v-if="firstEnter">
       <p class="animated fadeInLeftBig delay-1s slow"><span class="text-strong">{{ parseTime(firstEnter.time) }} </span></p>
       <p class="animated fadeInLeftBig delay-1s slow">这天，你第一次走进了图书馆</p>
       <p class="animated fadeInLeftBig delay-2s slow">你可能还没有意识到</p>
@@ -39,21 +39,12 @@
   export default {
     data () {
       return {
-        // enter: {
-        //   enterCount: 118,
-        //   rankAll: 2721,
-        //   rankDept: 123,
-        //   studentCount: 4321
-        // },
-        // firstEnter: {
-        //   time: "2015-09-01"
-        // },
         enterCount_countup: 0,
         rankDept_countup: 0,
         enterPercentage_countup: 0,
-        enterCount_display: "",
-        rankDept_display: "",
-        enterPercentage_display: "",
+        enterCount_display: "0",
+        rankDept_display: "-",
+        enterPercentage_display: "0",
       }
     },
     computed: {
@@ -66,44 +57,46 @@
       firstEnter: Object,
     },
     async mounted () {
-      setInterval(() => {
-        let range = this.enter.enterCount
-        let delta = range / 150
+      if (this.enter) {
+        setInterval(() => {
+          let range = this.enter.enterCount
+          let delta = range / 150
 
-        if (this.enterCount_countup < range - delta) {
-          this.enterCount_countup += delta
-        } else {
-          this.enterCount_countup = range
-        }
-        this.enterCount_display = this.enterCount_countup.toFixed(0)
+          if (this.enterCount_countup < range - delta) {
+            this.enterCount_countup += delta
+          } else {
+            this.enterCount_countup = range
+          }
+          this.enterCount_display = this.enterCount_countup.toFixed(0)
 
-      }, 10)
+        }, 10)
 
-      setInterval(() => {
-        let range = this.enter.rankDept
-        let delta = range / 150
+        setInterval(() => {
+          let range = this.enter.rankDept
+          let delta = range / 150
 
-        if (this.rankDept_countup < range - delta) {
-          this.rankDept_countup += delta
-        } else {
-          this.rankDept_countup = range
-        }
-        this.rankDept_display = this.rankDept_countup.toFixed(0)
+          if (this.rankDept_countup < range - delta) {
+            this.rankDept_countup += delta
+          } else {
+            this.rankDept_countup = range
+          }
+          this.rankDept_display = this.rankDept_countup.toFixed(0)
 
-      }, 10)
+        }, 10)
 
-      setInterval(() => {
-        let range = this.enterPercentage
-        let delta = range / 150
-        
-        if (this.enterPercentage_countup < range - delta) {
-          this.enterPercentage_countup += delta
-        } else {
-          this.enterPercentage_countup = range
-        }
-        this.enterPercentage_display = this.enterPercentage_countup.toFixed(2)
+        setInterval(() => {
+          let range = this.enterPercentage
+          let delta = range / 150
 
-      }, 10)
+          if (this.enterPercentage_countup < range - delta) {
+            this.enterPercentage_countup += delta
+          } else {
+            this.enterPercentage_countup = range
+          }
+          this.enterPercentage_display = this.enterPercentage_countup.toFixed(2)
+
+        }, 10)
+      }
     },
     methods: {
       parseTime (t) {
