@@ -1,18 +1,18 @@
 <template>
   <div class="fullpage-container flex-column-container">
     <div class="fullpage-wp" v-fullpage="opts" ref="pages">
-      <div class="page">
+      <div class="page fullsize">
         <Enter v-bind="enterData" v-if="showStatus[0]" />
       </div>
-      <div class="page">
+      <div class="page fullsize">
         <Book v-bind="bookData" v-if="showStatus[1]" />
       </div>
-      <div class="page">
-        <Portrait v-bind="portraitData" v-if="showStatus[2]" />
+      <div class="page fullsize">
+        <Portrait v-bind="portraitData" v-if="showStatus[2]" @to-first="moveToFirst" />
       </div>
     </div>
     
-    <div @click="moveNext">
+    <div @click="moveNext" v-if="!showStatus[2]">
       <img src="../../static/arrow-down.png" class="arrow animated infinite fadeInDown slow delay-1s">
     </div>
   </div>
@@ -61,9 +61,15 @@
         portrait: Object.keys(portrait).length !== 0 ? portrait : null
       }
     },
+    async mounted () {
+    },
     methods: {
       moveNext () {
         this.$refs.pages.$fullpage.moveNext()
+      },
+      moveToFirst () {
+        this.showStatus = [true, false, false]
+        this.$refs.pages.$fullpage.moveTo(0)
       },
       changeHandler (el, cur, next) {
         this.$set(this.showStatus, cur, false)
@@ -78,6 +84,9 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+  }
+  .fullsize {
+    height: 100%;
   }
   .arrow {
     width: 10%;

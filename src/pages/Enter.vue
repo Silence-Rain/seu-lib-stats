@@ -159,11 +159,6 @@
     font-weight: bold;
     color: #104E8B;
   }
-  .text-slight-strong {
-    font-size: 1.1em;
-    font-weight: bold;
-    color: #104E8B;
-  }
   .slides-level {
     padding: 2% 5%;
   }
@@ -172,8 +167,5 @@
     padding: 2px 5px;
     border-bottom: 1px solid #ddd;
     line-height: 1.8em;
-  }
-  .right-align p {
-    text-align: right;
   }
 </style>
