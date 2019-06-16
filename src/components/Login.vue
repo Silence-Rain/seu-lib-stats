@@ -41,7 +41,7 @@
 </template>
 
 <script>
-  import api from '../api'
+  import api from '@/api'
 
   export default {
     data () {
@@ -60,13 +60,10 @@
       this.$Message.loading("正在加载……")
     },
     methods: {
-      emptyFunc () {
-
-      },
       loadImg () {
         this.$Message.destroy()
       },
-      login () {
+      async login () {
         if (this.isInputFinished) {
 
           if (!/^[12]\d{8}$/.test(this.cardnum)) {
@@ -76,50 +73,14 @@
             return
           }
 
-          this.$Message.loading("正在提取回忆……")
-       
-          // let res = api.get("", {
-          //     cardnum: this.cardnum,
-          //     name: this.name
-          //   })
-
-          // 测试数据
-          // let res = {"result": true,"data": [{}, {}, {}, {}, {}, {}]}
-          let res = {
-            "result": true,
-            "data": [
-              {
-                "bookName": "工程化学",
-                "time": "2016-2-23 16:03:24"
-              },
-              {
-                "time": "2015-10-21 11:57:28"
-              },
-              {
-                "borrowCount": 21,
-                "deptName": "计算机科学与工程学院",
-                "rankDept": 105,
-                "rankAll": 4887,
-                "studentCount": 12766
-              },
-              {
-                "enterCount": 165,
-                "deptName": "计算机科学与工程学院",
-                "rankDept": 102,
-                "rankAll": 3716,
-                "studentCount": 8348
-              },
-              {
-                "span": 123,
-                "bookName": "Python程序设计教程",
-                "borrowTime": "2017-5-7 20:46:03",
-                "returnTime": "2017-9-7 16:27:47"
-              },
-              {
-                "category": 0
-              }
-            ]
-          }
+          this.$Message.loading({
+            content: "正在提取回忆……",
+            duration: 5
+          })
+          let res = await api.get("", {
+              cardnum: this.cardnum,
+              name: this.name
+            })
           this.$Message.destroy()
 
           if (res.result) {
@@ -135,6 +96,7 @@
               duration: 3
             })
           }
+
         }
       }
     }
