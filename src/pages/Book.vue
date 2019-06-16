@@ -7,18 +7,18 @@
             <p>大学期间总计借阅</p>
           </div>
           <div class="title-info">
-            <p><span class="title-strong">{{ borrowCount_countup }}</span> 本书</p>
+            <p><span class="title-strong">{{ borrowCount_display }}</span> 本书</p>
           </div>
         </div>
 
         <div class="stats-level flex-row-container">
           <div class="flex-column-container" style="width: 60%;">
-            <p>超过全校 <span class="text-strong">{{ borrowPercentage_countup }}%</span> 的人</p>
+            <p>超过全校 <span class="text-strong">{{ borrowPercentage_display }}%</span> 的人</p>
             <Progress :percent="borrowPercentage_countup" stroke-color="#104E8B" hide-info />
           </div>
           <div class="flex-column-container" style="width: 40%; border-left: 1px solid #ddd;">
             <p style="margin-top: 0.6em;">在院系中排名</p>
-            <p>第 <span class="text-strong">{{ rankDept_countup }}</span> 名</p>
+            <p>第 <span class="text-strong">{{ rankDept_display }}</span> 名</p>
           </div>
         </div>
       </div>
@@ -46,50 +46,63 @@
   export default {
     data () {
       return {
-        totalBorrow: {
-          borrowCount: 17,
-          rankAll: 3433,
-          rankDept: 201,
-          studentCount: 4321
-        },
-        firstBook: {
-          bookName: "第一本书",
-          time: "2015-09-18"
-        },
-        longestBorrow: {
-          bookName: "最长的书",
-          borrowTime: "2016-03-01",
-          returnTime: "2016-05-29",
-          span: 90
-        },
         borrowCount_countup: 0,
         rankDept_countup: 0,
-        borrowPercentage_countup: 0.0,
+        borrowPercentage_countup: 0,
+        borrowCount_display: "",
+        rankDept_display: "",
+        borrowPercentage_display: "",
       }
     },
     computed: {
       borrowPercentage () {
-        return 100 * this.totalBorrow.rankAll / this.totalBorrow.studentCount
+        return 100 - (100 * this.totalBorrow.rankAll / this.totalBorrow.studentCount)
       }
     },
     props: {
-      // totalBorrow: Object,
-      // firstBook: Object,
-      // longestBorrow: Object,
+      totalBorrow: Object,
+      firstBook: Object,
+      longestBorrow: Object,
     },
     async mounted () {
       setInterval(() => {
-        if (this.borrowCount_countup < this.totalBorrow.borrowCount)
-          this.borrowCount_countup += 1
-      }, 100)
-      setInterval(() => {
-        if (this.rankDept_countup < this.totalBorrow.rankDept)
-          this.rankDept_countup += 1
+        let range = this.totalBorrow.borrowCount
+        let delta = range / 150
+
+        if (this.borrowCount_countup < range - delta) {
+          this.borrowCount_countup += delta
+        } else {
+          this.borrowCount_countup = range
+        }
+        this.borrowCount_display = this.borrowCount_countup.toFixed(0)
+
       }, 10)
+
       setInterval(() => {
-        if (this.borrowPercentage_countup < this.borrowPercentage)
-          this.borrowPercentage_countup = Number((this.borrowPercentage_countup + 0.2).toFixed(1))
-      }, 1)
+        let range = this.totalBorrow.rankDept
+        let delta = range / 150
+        
+        if (this.rankDept_countup < range - delta) {
+          this.rankDept_countup += delta
+        } else {
+          this.rankDept_countup = range
+        }
+        this.rankDept_display = this.rankDept_countup.toFixed(0)
+
+      }, 10)
+
+      setInterval(() => {
+        let range = this.borrowPercentage
+        let delta = range / 150
+        
+        if (this.borrowPercentage_countup < range - delta) {
+          this.borrowPercentage_countup += delta
+        } else {
+          this.borrowPercentage_countup = range
+        }
+        this.borrowPercentage_display = this.borrowPercentage_countup.toFixed(2)
+
+      }, 10)
     },
     methods: {
       parseTime (t) {

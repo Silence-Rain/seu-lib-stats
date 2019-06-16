@@ -2,10 +2,10 @@
   <div class="fullpage-container flex-column-container">
     <div class="fullpage-wp" v-fullpage="opts" ref="pages">
       <div class="page">
-        <Book v-bind="bookData" v-if="showStatus[0]" />
+        <Enter v-bind="enterData" v-if="showStatus[0]" />
       </div>
       <div class="page">
-        <Enter v-bind="enterData" v-if="showStatus[1]" />
+        <Book v-bind="bookData" v-if="showStatus[1]" />
       </div>
       <div class="page">
         <Portrait v-bind="portraitData" v-if="showStatus[2]" />
@@ -46,20 +46,20 @@
       Portrait
     },
     async created () {
-      // this.data = this.$route.params.data
-      // let { totalBorrow, firstBook, longestBorrow, enter, longestEnter, portrait } = this.data
-      // this.bookData = {
-      //   totalBorrow: totalBorrow,
-      //   firstBook: firstBook,
-      //   longestBorrow: longestBorrow
-      // }
-      // this.enterData = {
-      //   enter: enter,
-      //   longestEnter: longestEnter
-      // }
-      // this.portraitData = {
-      //   portrait: portrait
-      // }
+      this.data = this.$route.params.data
+      let [ firstBook, firstEnter, totalBorrow, enter, longestBorrow, portrait ] = this.data
+      this.bookData = {
+        totalBorrow: totalBorrow,
+        firstBook: firstBook,
+        longestBorrow: longestBorrow
+      }
+      this.enterData = {
+        enter: enter,
+        firstEnter: firstEnter
+      }
+      this.portraitData = {
+        portrait: portrait
+      }
     },
     methods: {
       moveNext () {

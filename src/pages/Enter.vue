@@ -7,20 +7,21 @@
             <p>大学期间总计进馆</p>
           </div>
           <div class="title-info">
-            <p><span class="title-strong">{{ enterCount_countup }}</span> 次</p>
+            <p><span class="title-strong">{{ enterCount_display }}</span> 次</p>
           </div>
         </div>
 
         <div class="stats-level flex-row-container">
           <div class="flex-column-container" style="width: 60%;">
-            <p>超过全校 <span class="text-strong">{{ enterPercentage_countup }}%</span> 的人</p>
+            <p>超过全校 <span class="text-strong">{{ enterPercentage_display }}%</span> 的人</p>
             <Progress :percent="enterPercentage_countup" stroke-color="#104E8B" hide-info />
           </div>
           <div class="flex-column-container" style="width: 40%; border-left: 1px solid #ddd;">
             <p style="margin-top: 0.6em;">在院系中排名</p>
-            <p>第 <span class="text-strong">{{ rankDept_countup }}</span> 名</p>
+            <p>第 <span class="text-strong">{{ rankDept_display }}</span> 名</p>
           </div>
         </div>
+
       </div>
     </div>
 
@@ -28,7 +29,7 @@
       <p class="animated fadeInLeftBig delay-1s slow"><span class="text-strong">{{ parseTime(firstEnter.time) }} </span></p>
       <p class="animated fadeInLeftBig delay-1s slow">这天，你第一次走进了图书馆</p>
       <p class="animated fadeInLeftBig delay-2s slow">你可能还没有意识到</p>
-      <p class="animated fadeInLeftBig delay-3s slow">这里将会伴你走过许多个充满学习的日日夜夜</p>
+      <p class="animated fadeInLeftBig delay-3s slow">这里将会伴你走过许多个充满学习的日日夜夜……</p>
     </div>
 
   </div>
@@ -38,43 +39,71 @@
   export default {
     data () {
       return {
-        enter: {
-          enterCount: 118,
-          rankAll: 2721,
-          rankDept: 123,
-          studentCount: 4321
-        },
-        firstEnter: {
-          time: "2015-09-01"
-        },
+        // enter: {
+        //   enterCount: 118,
+        //   rankAll: 2721,
+        //   rankDept: 123,
+        //   studentCount: 4321
+        // },
+        // firstEnter: {
+        //   time: "2015-09-01"
+        // },
         enterCount_countup: 0,
         rankDept_countup: 0,
-        enterPercentage_countup: 0.0,
+        enterPercentage_countup: 0,
+        enterCount_display: "",
+        rankDept_display: "",
+        enterPercentage_display: "",
       }
     },
     computed: {
       enterPercentage () {
-        return 100 * this.enter.rankAll / this.enter.studentCount
+        return 100 - (100 * this.enter.rankAll / this.enter.studentCount)
       }
     },
     props: {
-      // totalBorrow: Object,
-      // firstBook: Object,
-      // longestBorrow: Object,
+      enter: Object,
+      firstEnter: Object,
     },
     async mounted () {
       setInterval(() => {
-        if (this.enterCount_countup < this.enter.enterCount)
-          this.enterCount_countup += 1
+        let range = this.enter.enterCount
+        let delta = range / 150
+
+        if (this.enterCount_countup < range - delta) {
+          this.enterCount_countup += delta
+        } else {
+          this.enterCount_countup = range
+        }
+        this.enterCount_display = this.enterCount_countup.toFixed(0)
+
       }, 10)
+
       setInterval(() => {
-        if (this.rankDept_countup < this.enter.rankDept)
-          this.rankDept_countup += 1
+        let range = this.enter.rankDept
+        let delta = range / 150
+
+        if (this.rankDept_countup < range - delta) {
+          this.rankDept_countup += delta
+        } else {
+          this.rankDept_countup = range
+        }
+        this.rankDept_display = this.rankDept_countup.toFixed(0)
+
       }, 10)
+
       setInterval(() => {
-        if (this.enterPercentage_countup < this.enterPercentage)
-          this.enterPercentage_countup = Number((this.enterPercentage_countup + 0.2).toFixed(1))
-      }, 1)
+        let range = this.enterPercentage
+        let delta = range / 150
+        
+        if (this.enterPercentage_countup < range - delta) {
+          this.enterPercentage_countup += delta
+        } else {
+          this.enterPercentage_countup = range
+        }
+        this.enterPercentage_display = this.enterPercentage_countup.toFixed(2)
+
+      }, 10)
     },
     methods: {
       parseTime (t) {

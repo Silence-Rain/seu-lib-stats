@@ -69,59 +69,55 @@
       login () {
         if (this.isInputFinished) {
 
-          // if (!/^[12]\d{8}$/.test(this.cardnum)) {
-          //   this.$Message.error({
-          //     content: "一卡通号写错啦>_<"
-          //   })
-          //   return
-          // }
-          // // 暂时取消姓名正则，以防莫名其妙的bug
-          // if (!/^[\u4E00-\u9FA5]{2,}$/.test(this.name)) {
-          //   this.$Message.error({
-          //     content: "姓名写错啦>_<"
-          //   })
-          //   return
-          // }
+          if (!/^[12]\d{8}$/.test(this.cardnum)) {
+            this.$Message.error({
+              content: "一卡通号写错啦>_<"
+            })
+            return
+          }
 
           this.$Message.loading("正在提取回忆……")
        
           // let res = api.get("", {
           //     cardnum: this.cardnum,
-          //     name: this.num
+          //     name: this.name
           //   })
 
           // 测试数据
           let res = {
-            result: true,
-            data: {
-              firstBook: {
-                bookName: "第一本书",
-                time: "2015-09-18"
+            "result": true,
+            "data": [
+              {
+                "bookName": "工程化学",
+                "time": "2016-2-23 16:03:24"
               },
-              totalBorrow: {
-                borrowCount: 17,
-                rankAll: 3456,
-                rankDept: 201,
-                studentCount: 4321
+              {
+                "time": "2015-10-21 11:57:28"
               },
-              enter: {
-                enterCount: 118,
-                rank: 2789,
-                studentCount: 4321
+              {
+                "borrowCount": 21,
+                "deptName": "计算机科学与工程学院",
+                "rankDept": 105,
+                "rankAll": 4887,
+                "studentCount": 12766
               },
-              longestBorrow: {
-                bookName: "最长的书",
-                borrowTime: "2016-03-01",
-                returnTime: "2016-05-29",
-                span: 90
+              {
+                "enterCount": 165,
+                "deptName": "计算机科学与工程学院",
+                "rankDept": 102,
+                "rankAll": 3716,
+                "studentCount": 8348
               },
-              longestEnter: {
-                beginTime: "2017-01-09",
-                endTime: "2017-01-21",
-                span: 13
+              {
+                "span": 123,
+                "bookName": "Python程序设计教程",
+                "borrowTime": "2017-5-7 20:46:03",
+                "returnTime": "2017-9-7 16:27:47"
               },
-              portrait: "画像名称"
-            }
+              {
+                "portrait": "画像:【借书少、入馆少】,待修改"
+              }
+            ]
           }
           this.$Message.destroy()
 

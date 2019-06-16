@@ -10,6 +10,7 @@
   "dependencies": {
     "animate.css": "^3.7.2",
     "axios": "^0.18.1",
+    "countup.js": "^2.0.4",
     "fullpage-vue": "^1.8.3",
     "iview": "^3.4.2",
     "vue": "^2.4.4",
