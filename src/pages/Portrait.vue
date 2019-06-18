@@ -6,7 +6,7 @@
     </div>
 
     <div id="slide1" class="slides-level" v-if="portrait">
-      <p class="animated fadeInLeftBig">经过图书馆的分析，你应该是……</p>
+      <p class="animated fadeInLeftBig">经过图书馆的分析，最适合你的书是……</p>
     </div>
 
     <div id="portrait-title" class="animated fadeIn delay-1s">
@@ -34,8 +34,8 @@
   export default {
     data () {
       return {
-        portraits: ["借书少进馆少", "借书少进馆多", "借书多进馆少", "借书多进馆多"],
-        portraitsDesc: [["借书少进馆少111", "借书少进馆少222"], ["借书少进馆多111", "借书少进馆多222"], ["借书多进馆少111", "借书多进馆少222"], ["借书多进馆多111", "借书多进馆多222"]],
+        portraits: ["《神秘岛》", "《绿野仙踪》", "《解忧杂货店》", "《大学》"],
+        portraitsDesc: [["虽然自己学习也很酷，", "可是咱们九龙湖已经通网了……"], ["梦会醒，梦中故事会被铭记，", "你会离开李文正，但请不要忘了读过的书！"], ["无论你来自何方，将要去向何处，", "书都愿意认真倾听你的孤绝和烦忧"], ["大学之道，在明明德，", "在亲民，在止于至善"]],
         isShare: false,
       }
     },
@@ -65,14 +65,14 @@
     top: 10%;
   }
   #portrait-title {
-    width: 80%;
+    width: 100%;
     font-size: 3em;
     font-weight: bold;
     color: #104E8B;
     text-align: center;
     position: absolute;
     top: 20%;
-    left: 10%;
+    left: 0%;
   }
   #slide2 {
     position: absolute;
